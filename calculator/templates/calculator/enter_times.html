@@ -1,0 +1,82 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>LMC</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"     crossorigin="anonymous">
+        <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0    En5r" crossorigin="anonymous">
+        <link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+        <script src="{% static 'js/get_result.js' %}"></script>
+    </head>
+    <!--<body onload=alert(today)>-->
+    <body>
+        <div class="container">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h2 class="panel-title">LMC Running Predictor</h2>
+                </div>
+                <div id="perform_body" class="panel-body">
+                    <form id="perform" method="POST" class="post-form performance_table">{% csrf_token %}
+                        <table style="width:100%">
+                            <col align="center">
+                            <col align="center">
+                            <tr>
+                                <td align="center">Distance to predict</td>
+                                <td align="center">Gender</td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="entry">
+                                    {{form.distanceToPredict}}
+                                </td>
+                                <td align="center" class="entry">
+                                    {{form.gender}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">Attempted Distance(s)</td>
+                                <td align="center">Best Time(s)</td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="entry">
+                                    {{form.distance1}}
+                                </td>
+                                <td align="center" class="entry">
+                                    {{form.time1}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="entry">
+                                    {{form.distance2}}
+                                </td>
+                                <td align="center" class="entry">
+                                    {{form.time2}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="entry">
+                                    {{form.distance3}}
+                                </td>
+                                <td align="center" class="entry">
+                                    {{form.time3}}
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <button id="calc_butt" type="submit" class="save btn btn-success btn-block">predict</button> 
+                    </form> 
+                    <div id="prediction" align="center">
+                        <!--<font size="6" color="{{color}}">{{results}}</font>-->
+                    </div>
+                    <br>
+                    <div align="center">
+                        <font size="2">
+                         <a href="http://arxiv.org/pdf/1505.01147">Blythe, D.A.J. and Kir&aacutely, F.J. (2015). Prediction and quantification of individual athletic performance. arXiv preprint arXiv:1505.01147.</a>
+                        </font>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

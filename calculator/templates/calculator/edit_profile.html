@@ -1,0 +1,78 @@
+{% load staticfiles %}
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/d3.v3.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+<script src="{% static 'js/color_bar.js' %}"></script>
+<script src="{% static 'js/get_result_flexible.js' %}"></script>
+</head>
+<body>
+ <a href="http://arxiv.org/pdf/1505.01147">Blythe, D.A.J. and Kir&aacutely, F.J. (2015). Prediction and quantification of individual athletic performance. arXiv prep    rint arXiv:1505.01147.</a>
+<br>
+<br>
+<form method="post" id='perform'>
+    {% csrf_token %}
+
+    <label>Gender</label>
+    {{ profile_form.first_name }}
+    {% if profile_form.first_name.errors %}
+        {% for error in profile_form.first_name.errors %}
+            {{ error|escape }}
+        {% endfor %}
+    {% endif %}
+
+    <label>Distance to Predict</label>
+    {{ profile_form.to_predict}}
+
+    <br>
+    <br>
+
+    <label>Past Performances (format hrs:mins:secs)</label>
+
+    <br>
+    <br>
+
+    {{ link_formset.management_form }}
+
+    {% for link_form in link_formset %}
+        <div class="link-formset">
+            {{ link_form.anchor }}
+            {% if link_form.anchor.errors %}
+                {% for error in link_form.anchor.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+
+            {{ link_form.url }}
+            {% if link_form.url.errors %}
+                {% for error in link_form.url.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if link_formset.non_form_errors %}
+        {% for error in link_formset.non_form_errors %}
+            {{ error|escape }}
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <input type="submit" value="Predict" id="predict_button" class="button"/>
+    <input type="submit" value="Three Number Summary" id="tns_button" class="button"/>
+</form>
+<div id='prediction'></div>
+<svg id='visualA' width="600px" height="600px">
+</svg>
+<svg id='visualB' width="600px" height="600px">
+</svg>
+<script>
+    $('.link-formset').formset({
+        addText: 'add attempt',
+        deleteText: 'remove attempt'
+    });
+</script>
+</body>
+
